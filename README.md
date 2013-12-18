@@ -42,3 +42,8 @@ Next, we'll need to declare our window.
 
 
 We need to handle the case where for some reason, the window is not set properly, which in Rust we do with a match statement that simply continues if nothing is wrong and throws an error if something does fail. sdl2::video can be used to get us most of the information we need. Passing the initialization flag for the window's type is a bit different in Rust. The various types you can pass besides Shown can be found in the /src/sdl2/video.rs file as a windowFlags enum.
+
+
+#### Final Notes
+
+This is an in progress tutorial and is continuing to be updated...
