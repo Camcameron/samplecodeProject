@@ -55,6 +55,47 @@ We need to handle the case where for some reason, the window is not set properly
  
 Next, we set up the renderer, which is very similar to how we set up a window, passing in our window instance, as well as some options to our renderer. After that we can start setting up some of the renderer's assets in the standard way. Here we simply initialize a background color, then we clear the screen and present it. This is the standard way of drawing the screen in SDL and the screen must always be cleared before being presented. Everytime a change is made to what is to be displayed, clear and present must be called again.
 
-#### Final Notes
+### Handling Events
 
+```rust
+let mut i = 0;
+match sdl2::event::poll_event() {
+                sdl2::event::QuitEvent(_) => break 'event,
+                sdl2::event::KeyDownEvent(_, _, key, _, _) => {
+                    if key == sdl2::keycode::EscapeKey {
+                        break 'event
+                    }
+		    if key == sdl2::keycode::RightKey{
+			println!("Right key!");	
+			if(i > 250){
+			i = 0;
+			}			
+			i = i+25;
+			renderer.set_draw_color(sdl2::pixels::RGB(i, 0, 0));    
+			}
+		    if key == sdl2::keycode::LeftKey{
+			println!("Left key!");	
+			if(i < 0){
+			i = 250;
+			}			
+			i = i-25;
+			renderer.set_draw_color(sdl2::pixels::RGB(i, 0, 0));    
+			}
+                }
+                _ => {}
+            }
+    renderer.clear();
+    renderer.present();
+    }
+ ```   
+         
+Handling events is relativly simple in SDL and we only need a main event loop. Rust's match feature is once again very useful here. First we declare the loop and then use Rust's matching feature to check which event happens. Essentially, we are purposefully entering an unending loop that will constantly poll for events. If no event is found to have occured, of course nothing happens. However, if an event is registered, it'll match to that and do the specified action. The main events we need to worry about are key pressed events, which happen if a key is pressed on the keyboard. Once a KeyDownEvent is detected, we can figure out exactly which key is pressed and do an action from there. If no action is specified for a specific key, it assumes nothing to do. Other wise, it performs the action. 
+
+Here, we simply have the it detecting the right and left keys to darken or lighten the color of red, as an example of how events can be used to drive the program. Also important, as mentioned previously, is to clear and present the renderer every time so the screen can be updated.
+
+You also probably want to detect other events such as the QuitEvent, which detects if the upper right red x is clicked. If you don't handle this event, your program won't close properly upon clicking the exit button. More details on what events you can detect can be found in SDL's api documentation; http://www.libsdl.org/release/SDL-1.2.15/docs/html/eventstructures.html .
+
+#### "Final" Notes
+
+While Rust's SDL bindings are an in progress work, they work very well, and are a good match if you're looking to design anything utilizing graphics.
 This is an in progress tutorial and is continuing to be updated...
