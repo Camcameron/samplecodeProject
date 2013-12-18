@@ -25,6 +25,12 @@ Then, to start with your own code you will want to create two files a main file,
 
 ### Opening a Window
 
+First, as part of SDL, we want to declare what parts of SDL we want initiliazed. In this case we want their video system, so in Rust we simply declare:
+
+```rust
+sdl2::init([sdl2::InitVideo]);
+ ```
+Next, we'll need to declare our window. We need to handle the case where for some reason, the window is not set properly, which in Rust we do with a match statement that simply continues if nothing is wrong and throws an error if something does fail. sdl2::video can be used to get us most of the information we need. Passing the initialization flag for the window's type is a bit different in Rust. The various types you can pass besides Shown can be found in the /src/sdl2/video.rs file as a windowFlags enum.
 ```rust
      let window = match sdl2::video::Window::new("rust-sdl2 demo: Videoooooo", sdl2::video::PosCentered, sdl2::video::PosCentered, 800, 600, [sdl2::video::Shown]) {
         Ok(window) => window,
