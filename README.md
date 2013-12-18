@@ -43,6 +43,17 @@ Next, we'll need to declare our window.
 
 We need to handle the case where for some reason, the window is not set properly, which in Rust we do with a match statement that simply continues if nothing is wrong and throws an error if something does fail. sdl2::video can be used to get us most of the information we need. Passing the initialization flag for the window's type is a bit different in Rust. The various types you can pass besides Shown can be found in the /src/sdl2/video.rs file as a windowFlags enum.
 
+```rust
+ let renderer = match sdl2::render::Renderer::from_window(window, sdl2::render::DriverAuto, [sdl2::render::Accelerated]) {
+        Ok(renderer) => renderer,
+        Err(err) => fail!(format!("failed to create renderer: {}", err))
+    };
+    renderer.set_draw_color(sdl2::pixels::RGB(100, 200, 100));
+    renderer.clear();
+    renderer.present();
+ ```
+ 
+Next, we set up the renderer, which is very similar to how we set up a window, passing in our window instance, as well as some options to our renderer. After that we can start setting up some of the renderer's assets in the standard way. Here we simply initialize a background color, then we clear the screen and present it. This is the standard way of drawing the screen in SDL and the screen must always be cleared before being presented. Everytime a change is made to what is to be displayed, clear and present must be called again.
 
 #### Final Notes
 
