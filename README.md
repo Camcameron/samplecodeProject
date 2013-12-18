@@ -97,6 +97,10 @@ Here, we simply have the it detecting the right and left keys to darken or light
 
 You also probably want to detect other events such as the QuitEvent, which detects if the upper right red x is clicked. If you don't handle this event, your program won't close properly upon clicking the exit button. More details on what events you can detect can be found in SDL's api documentation; http://www.libsdl.org/release/SDL-1.2.15/docs/html/eventstructures.html .
 
+### Rendering an Image
+
+Perhaps the biggest flaw with rust-sdl2.0 right now is that it doesn't provide support for loading images. However, we can draw some basic shapes and surfaces to the screen.
+
 #### "Final" Notes
 
 While Rust's SDL bindings are an in progress work, they work very well, and are a good match if you're looking to design anything utilizing graphics.
